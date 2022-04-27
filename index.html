@@ -3,139 +3,160 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lecture 9</title>
-    <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/white.css">
-    <link rel="stylesheet" href="css/theme/custom.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css" id="theme">
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="lib/css/googlecode.css">
-    <!-- Printing and PDF exports -->
-    <script>
-    var link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-    document.getElementsByTagName('head')[0].appendChild(link);
-    </script>
+    <link rel="stylesheet" href="plugin/highlight/github.css">
+    <link rel="stylesheet" href="plugin/chalkboard/style.css">
+    <link rel="stylesheet" href="plugin/customcontrols/style.css">
+    <link rel="stylesheet" href="plugin/menu/font-awesome/css/all.css">
 </head>
 
 <body>
     <div class="reveal" style="background-color: #fff;">
         <div class="slides">
             <section data-background-video="bgm.mp4" data-background-video-loop data-background-video-muted style="text-align: left;">
-                <h2 style="color: white">Python Programming</h2>
-                <h5 style="color: white">Lecture 9 Object-Oriented Programming </h5>
+                <h1 style="color: white">Python Programming</h1>
+                <h3 style="color: white">Lecture 9 Additional Python Conveniences </h3>
             </section>
             <section>
                 <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">9.1 OOP Basics</h2>
+                    <h2 style="color: white">9.1 Iterators and Generators</h2>
                 </section>
                 <section>
+                    <h3>Iterator (迭代器)</h3>
+                    <p>Many types of objects in Python that qualify as being iterable (可迭代的), such as list, tuple, dictionary. In Python, the mechanism for iteratioin is based upon the following conventions:</p>
                     <ul>
-                        <li class="fragment">
-                            <p>Object-oriented programming is one of the most effective approaches to writing software.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>Python has been an object-oriented language since it existed. Because of this, creating and using classes and objects are downright easy.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>Understanding object-oriented programming will help you see the world as a programmer does. It'll help you really know your code, not just what’s happening line by line, but also the bigger concepts behind it.</p>
-                        </li>
+                        <li>An <b>iterator</b> is an object that manages an iteration through a series of values. If variable, i, identifies an iterator object, then each call to the built-in function, next(i), produces a subsequent element from the underlying series, with StopIteration exception raised to indicate that there are no further elements.</li>
+                        <li>Usage:<b> 1. abstract sequence; 2. save memory</b></li>
                     </ul>
                 </section>
                 <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Creating and Using a Class</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def sit(self):
-        print(self.name.title() + " is now sitting.")
-
-    def roll_over(self):
-        print(self.name.title() + " rolled over!")
-</code></pre>
-                    </div>
-                    <ul>
-                        <li class="fragment">
-                            <p>By convention, capitalized names refer to classes in Python.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>A function that's part of a class is a method.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>The __init__() method is a special method Python runs automatically whenever we create a new instance based on the Dog class.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>Variables that are accessible through instances like this are called <b>attributes</b>.</p>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <div class="fragment"><img data-src="dog.png" style="height: 500pt"></div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div class='div-c'>
-                        <ul>
-                            <li class="fragment">
-                                <p>Making an Instance from a Class</p>
-                            </li>
-                        </ul>
+                    <div class="div-c">
                         <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+                            <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+import itertools
+nums = itertools.count(0,2)
 
-    def sit(self):
-        print(self.name.title() 
-            + " is now sitting.")
+print(next(nums))
+print(next(nums))
+print(next(nums))
 
-    def roll_over(self):
-        print(self.name.title() 
-            + " rolled over!")
 </code></pre>
                         </div>
                     </div>
-                    <div class='div-d'>
+                    <div class="div-d">
                         <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-my_dog = Dog('willie', 6)
+                            <pre><code class="output" contenteditable>
+0
+2
+4
 
-print(my_dog.name.title())
-print(str(my_dog.age)+" years old")
+
 </code></pre>
                         </div>
+                    </div>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+import itertools
+
+nums = itertools.count(0,2)
+for i in nums:
+    if i > 6:
+        break
+    print(i)
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="output" contenteditable>
+0
+2
+4
+6
+
+
+</code></pre>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+import itertools
+
+cycle_strings = itertools.cycle('ABC')
+i = 1
+for string in cycle_strings:
+    if i == 7:
+        break
+    print(string)
+    i = i + 1
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="output" contenteditable>
+A
+B
+C
+A
+B
+C
+
+
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+import itertools
+for item in itertools.repeat('hello', 3):
+    print(item)
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
                         <div class="fragment">
                             <pre><code class="output" data-trim contenteditable>
-Willie
-6 years old
+hello world
+hello world
+hello world
 </code></pre>
                         </div>
+                    </div>
+                    <div class="div-c">
                         <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-my_dog.sit()
-my_dog.roll_over()
+                            <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+import itertools
+nums = itertools.repeat('hello', 3)
+
+print(next(nums))
+print(next(nums))
+print(next(nums))
+print(next(nums))
 </code></pre>
                         </div>
+                    </div>
+                    <div class="div-d">
                         <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-Willie is now sitting.
-Willie rolled over!
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-your_dog = Dog('lucy', 3)
+                            <pre><code class="output" contenteditable>
+hello
+hello
+hello
+Traceback (most recent call last):
+    print(next(nums))
+StopIteration
 </code></pre>
                         </div>
                     </div>
@@ -143,1054 +164,645 @@ your_dog = Dog('lucy', 3)
                 <section>
                     <ul>
                         <li class="fragment">
-                            <p>Working with Classes and Instances</p>
+                            <p>The most convenient technique for creating iterators in Python is through the use of <b>Generators</b>.</p> A generator is implemented with a syntax that is very similar to a function, but instead of returning values, a <b>yield</b> statement is executed to indicate each element of the series.
                         </li>
                     </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Car():
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.odometer_reading = 0
-
-    def get_descriptive_name(self):
-        long_name="{} {} {}".format(self.year,\
-        self.make,self.model)
-        return long_name.title()
-
-    def read_odometer(self):
-        print("This car has " 
-            + str(self.odometer_reading) 
-            + " miles on it.")
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def yrange(n):
+    i = 0
+    while i < n:
+        yield i
+        i = i + 1 
+o = yrange(5)
+print(next(o))
+print(next(o))
+print(next(o))
+print(next(o))
+print(next(o))
+print(next(o))
 </code></pre>
+                        </div>
                     </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="output" contenteditable>
+0
+1
+2
+3
+4
+Traceback (most recent call last):
+  File "test.py", line 13, in &lt;module&gt;
+    print(next(o))
+StopIteration
+
+
+</code></pre>
+                        </div>
+                    </div>
+
+                </section>
+                <section>
+                                        <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def yrange(n):
+    i = 0
+    while i < n:
+        yield i
+        i = i + 1 
+
+for x in yrange(5):
+    print(x)
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="output" contenteditable>
+0
+1
+2
+3
+4
+
+
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+g = (x * x for x in range(4)) 
+print(next(g))
+print(next(g))
+print(next(g))
+print(next(g))
+print(next(g))
+print(next(g))
+
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="output" data-trim contenteditable>
+0
+1
+4
+9
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+StopIteration
+
+
+</code></pre>
+                        </div>
+                    </div>
+
+                </section>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">9.2 Map, Filter, Lambda</h2>
+                </section>
+                <section>
+                    <h3>map()</h3>
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-my_new_car = Car('audi', 'a4', 2016)
-print(my_new_car.get_descriptive_name())
-my_new_car.read_odometer()
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def f(x):
+    return x * x
+
+y = map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])    
+print(list(y))
 </code></pre>
                     </div>
                     <div class="fragment">
                         <pre><code class="output" data-trim contenteditable>
-2016 Audi A4
-This car has 0 miles on it.
+[1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+>>> print(list(map(str, [1, 2, 3, 4, 5, 6, 7, 8, 9])))
+['1', '2', '3', '4', '5', '6', '7', '8', '9']
+</code></pre>
+                    </div>
+                                        <h3 class="fragment">filter()</h3>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def k(x):
+    return x%2 == 0
+
+y = list(filter(k, [1, 2, 3, 4, 5, 6, 7, 8, 9]))   
+print(y)
 </code></pre>
                     </div>
                 </section>
-                <section data-background-image="bg.png">
-                    <div class='div-c'>
-                        <ul>
-                            <li class="fragment">
-                                <p>Modifying Attribute Values</p>
-                            </li>
-                        </ul>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Car():
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.odometer_reading = 0
-
-    def read_odometer(self):
-        print("This car has " 
-            + str(self.odometer_reading) 
-            + " miles on it.")
-</code></pre>
-                        </div>
-                    </div>
-                    <div class='div-d'>
-                        <ul>
-                            <li class="fragment">
-                                <p>Modifying an Attribute's Value Directly</p>
-                            </li>
-                        </ul>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-my_new_car.odometer_reading = 23
-my_new_car.read_odometer()
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-2016 Audi A4
-This car has 23 miles on it.
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div class='div-c'>
-                        <ul>
-                            <li class="fragment">
-                                <p>Modifying Attribute Values</p>
-                            </li>
-                        </ul>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Car():
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.odometer_reading = 0
-
-    def read_odometer(self):
-        print("This car has " 
-            + str(self.odometer_reading) 
-            + " miles on it.")
-
-    def update_odometer(self, mileage):
-        self.odometer_reading = mileage
-</code></pre>
-                        </div>
-                    </div>
-                    <div class='div-d'>
-                        <ul>
-                            <li class="fragment">
-                                <p>Modifying an Attribute's Value Through a Method</p>
-                            </li>
-                        </ul>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-my_new_car = Car('audi', 'a4', 2016)
-my_new_car.update_odometer(23)
-my_new_car.read_odometer()
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-This car has 23 miles on it.
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-my_new_car.update_odometer(30)
-my_new_car.read_odometer()
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-This car has 30 miles on it.
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div class='div-c'>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Car():
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.odometer_reading = 0
-
-    def read_odometer(self):
-        print("This car has " 
-            + str(self.odometer_reading) 
-            + " miles on it.")
-
-    def update_odometer(self, mileage):
-        self.odometer_reading = mileage
-
-    def increment_odometer(self, miles):
-        self.odometer_reading += miles
-</code></pre>
-                        </div>
-                    </div>
-                    <div class='div-d'>
-                        <ul>
-                            <li class="fragment">
-                                <p>Modifying an Attribute's Value Through a Method</p>
-                            </li>
-                        </ul>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-my_new_car = Car('audi', 'a4', 2016)
-my_new_car.update_odometer(23)
-my_new_car.read_odometer()
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-This car has 23 miles on it.
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-my_used_car.increment_odometer(100)
-my_used_car.read_odometer()
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-This car has 123 miles on it.
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-            </section>
-            <section>
-                <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">9.2 Inheritance, Polymorphism</h2>
-                </section>
+                <!--
                 <section>
+                    
+                    <h3>reduce()</h3>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+from functools import reduce 
+
+def g(x, y):
+    return x * y
+
+y = reduce(g, [1, 2, 3, 4, 5, 6, 7, 8, 9])    
+print(y)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+>>> print(reduce(g, map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])))
+131681894400
+</code></pre>
+                    </div>
+                
+
+                </section>
+                -->
+                <section>
+                    <h3>Anonymous function: lambda</h3>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def add( x, y ):
+    return x + y
+ 
+lambda x, y: x + y
+ 
+lambda x, y = 2: x + y
+lambda *z: z
+</code></pre>
+                    </div>
                     <ul>
                         <li class="fragment">
-                            <p>You don't always have to start from scratch when writing a class. If the class you're writing is a specialized version of another class you wrote, you can use <b>inheritance</b>.</p>
+                            <p>Sometimes the anonymous function is convenient.</p>
                         </li>
                         <li class="fragment">
-                            <p>When one class inherits from another, it automatically takes on all the attributes and methods of the first class.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>The original class is called the parent class, and the new class is the child class. The child class inherits every attribute and method from its parent class but is also free to define new attributes and methods of its own.</p>
+                            <p>It has only one expression. (You do not have to use <b>return</b>)</p>
                         </li>
                     </ul>
-                </section>
-                <section>
-                    <div class="fragment"><img data-src="car.png" style="height: 400pt"></div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div class="div-c">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Car():
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.odometer_reading = 0
-    def get_descriptive_name(self):
-        long_name="{} {} {}".format(self.year,\
-        self.make,self.model)
-        return long_name.title()
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+>>> list(map(lambda x: x * x, [1, 2, 3, 4, 5, 6, 7, 8, 9]))
+[1, 4, 9, 16, 25, 36, 49, 64, 81]
 </code></pre>
-                        </div>
                     </div>
-                    <div class="div-d">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class ElectricCar(Car):
-    def __init__(self, make, model, year):
-        super().__init__(make, model, year)
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-my_tesla = ElectricCar('tesla', 'model s', 2016)
-print(my_tesla.get_descriptive_name())
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-2016 Tesla Model S
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div class="div-c">
-                        <h5>Polymorphism</h5>
-                        <ul>
-                            <li class="fragment">
-                                <p>Defining attributes and methods for the child class</p>
-                            </li>
-                        </ul>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Car():
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.odometer_reading = 0
-    def get_descriptive_name(self):
-        long_name="{} {} {}".format(self.year,\
-        self.make,self.model)
-        return long_name.title()
-</code></pre>
-                        </div>
-                    </div>
-                    <div class="div-d">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class ElectricCar(Car):
-    def __init__(self, make, model, year):
-        super().__init__(make, model, year)
-        self.battery_size = 70
-    def describe_battery(self):
-        print(str(self.battery_size)
-        +"-kWh battery.")
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-my_tesla = ElectricCar('tesla', 'model s', 2016)
-print(my_tesla.get_descriptive_name())
-my_tesla.describe_battery()
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-2016 Tesla Model S
-70-kWh battery.
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div class="div-c">
-                        <ul>
-                            <li class="fragment">
-                                <p>Overriding methods from the parent class</p>
-                            </li>
-                        </ul>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Car():
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.odometer_reading = 0
-    def get_descriptive_name(self):
-        long_name="{} {} {}".format(self.year,\
-        self.make,self.model)
-        return long_name.title()
-</code></pre>
-                        </div>
-                    </div>
-                    <div class="div-d">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class ElectricCar(Car):
-    def __init__(self, make, model, year):
-        super().__init__(make, model, year)
-        self.battery_size = 70
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+print(reduce(lambda x,y: x*y, map(lambda x: x**2, [1, 2, 3, 4, 5, 6, 7, 8, 9])))
 
-    def describe_battery(self):
-        print(str(self.battery_size)
-            +"-kWh battery.")
-
-    def get_descriptive_name(self):
-        long_name = str(self.year)+' '+self.make
-        return long_name.title()
 </code></pre>
-                        </div>
-                        <ul>
-                            <li class="fragment">
-                                <p><b>Open/closed principle</b></p>
-                            </li>
-                            <li class="fragment">
-                                <p>Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification.</p>
-                            </li>
-                        </ul>
                     </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <ul>
-                        <li>We have learned a way to inherit, i.e., super(). There are two other ways.</li>
-                    </ul>
-                    <div class="div-c">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Person:
-    def __init__(self,name,sex):
-        self.name = name
-        self.sex = sex
-        
-    def print_title(self):
-        if self.sex == "male":
-            print("man")
-        elif self.sex == "female":
-            print("woman")
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+print(list(filter(lambda x: x%2==0, [1, 2, 3, 4, 5, 6, 7, 8, 9])))
 
-class Child(Person):                            
-    pass 
 </code></pre>
-                        </div>
-                    </div>
-                    <div class="div-d">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>         
-May = Child("May","female")
-Peter = Person("Peter","male")
-
-print(May.name,May.sex,Peter.name,Peter.sex)    
-May.print_title()
-Peter.print_title()
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-May female Peter male
-woman
-man
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div class="div-c">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Person:
-    def __init__(self,name,sex):
-        self.name = name
-        self.sex = sex
-        
-    def print_title(self):
-        if self.sex == "male":
-            print("man")
-        elif self.sex == "female":
-            print("woman")
-
-class Child(Person):                            
-    def __init__(self,name,sex):
-        Person.__init__(self,name,sex)
-</code></pre>
-                        </div>
-                    </div>
-                    <div class="div-d">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>         
-May = Child("May","female")
-Peter = Person("Peter","male")
-
-print(May.name,May.sex,Peter.name,Peter.sex)    
-May.print_title()
-Peter.print_title()
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-May female Peter male
-woman
-man
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div class="div-c">
-                        <ul>
-                            <li class="fragment">
-                                <p>Overwrite completely</p>
-                            </li>
-                        </ul>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Person:
-    def __init__(self,name,sex):
-        self.name = name
-        self.sex = sex
-
-class Child(Person):                
-    def __init__(self,name,sex,mother):
-        self.name = name
-        self.sex = sex
-        self.mother = mother
-
-May = Child("May","female","April")
-print(May.name,May.sex,May.mother)    
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-May female April  
-</code></pre>
-                        </div>
-                    </div>
-                    <div class="div-d">
-                        <ul>
-                            <li class="fragment">
-                                <p>Overwrite partially</p>
-                            </li>
-                        </ul>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Person:
-    def __init__(self,name,sex):
-        self.name = name
-        self.sex = sex
-
-class Child(Person):                          
-    def __init__(self,name,sex,mother):
-        Person.__init__(self,name,sex) 
-        #super().__init__(name,sex)  
-        self.mother = mother
-
-May = Child("May","female","April")
-print(May.name,May.sex,May.mother)
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-May female April
-</code></pre>
-                        </div>
                     </div>
                 </section>
                 <section>
+                    <h3>Comprehension Syntax</h3>
                     <ul>
                         <li class="fragment">
-                            <p>Person. and super(). are almost the same <b>for the single inheritance with or without modification</b>. Do not mix them together!</p>
-                        </li>
-                        <li class="fragment">
-                            <p>If you just need complete inheritance of attributes, then all three ways are equivalent.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>Without Person. super(), __init__ in the child class overwrites the __init__ in the parent class.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>You would better use <b>super()</b> to inherit or extend the method of the parent class.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>There is no, "new-style-and-classic-classes" (新式类，经典类) in Python 3.x.</p>
+                            <p>[ expression <b>for</b> value <b>in</b> iterable <b>if</b> condition ]</p>
                         </li>
                     </ul>
-                </section>
-                <section data-background-image="bg.png">
-                    <div class="div-c">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Person:
-    pass
-class Child(Person):                 
-    pass
-May = Child()
-Peter = Person()    
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+>>> [x * x for x in range(1, 11)]
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 </code></pre>
-                        </div>
                     </div>
-                    <div class="div-d">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-print(isinstance(May,Child))         # True
-print(isinstance(May,Person))        # True
-print(isinstance(Peter,Child))       # False
-print(isinstance(Peter,Person))      # True
-print(issubclass(Child,Person))      # True
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+>>> [x * x for x in range(1, 11) if x % 2 == 0]
+[4, 16, 36, 64, 100]
 </code></pre>
-                        </div>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+>>> [m + n for m in 'ABC' for n in 'XYZ']
+['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ']
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+>>> d = {'x': 'A', 'y': 'B', 'z': 'C' }
+>>> [k + '=' + v for k, v in d.items()]
+['y=B', 'x=A', 'z=C']
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+>>> L = ['Hello', 'World', 'IBM', 'Apple']
+>>> [s.lower() for s in L]
+['hello', 'world', 'ibm', 'apple']
+</code></pre>
                     </div>
                 </section>
             </section>
             <section>
                 <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">9.3 Special Methods, Import Class</h2>
+                    <h2 style="color: white">9.3 Nested Functions</h2>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">Closure Function</li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def calc_sum(*args):
+    ax = 0
+    for n in args:
+        ax = ax + n
+    return ax
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def lazy_sum(*args):
+    def sum():
+        ax = 0
+        for n in args:
+            ax = ax + n
+        return ax
+    return sum
+
+f = lazy_sum(1, 3, 5, 7, 9)
+print(f()) # 25
+print(type(f)) # function
+</code></pre>
+                    </div>
+                    <!--
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+f1 = lazy_sum(1, 3, 5, 7, 9)
+f2 = lazy_sum(1, 3, 5, 7, 9)
+print(f1==f2) #False
+</code></pre>
+                    </div>
+                -->
                 </section>
                 <section>
                     <ul>
                         <li class="fragment">
-                            <p>The precise definition of dir() is that it lists the methods and attributes of a Python object.</p>
+                            <p>Defining a closure function</p>
+                        </li>
+                        <li class="fragment">
+                            <p>When do we have a closure?</p>
+                            <ul>
+                                <li class="fragment">
+                                    <p>We must have a nested function (function inside a function).</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>The nested function must refer to a value defined in the enclosing function.</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>The enclosing function must return the nested function.</p>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="fragment">
+                            <p>When to use closures?</p>
+                            <ul>
+                                <li class="fragment">
+                                    <p>Closures can avoid the use of global values and provides some form of data hiding. It can also provide an object oriented solution to the problem.</p>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
+                </section>
+                <section>
+                    <h3>Example</h3>
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
->>> stuff = list()
->>> dir(stuff)
-['__add__', '__class__', '__contains__', '__delattr__',
-'__delitem__', '__dir__', '__doc__', '__eq__',
-'__format__', '__ge__', '__getattribute__', '__getitem__',
-'__gt__', '__hash__', '__iadd__', '__imul__', '__init__',
-'__iter__', '__le__', '__len__', '__lt__', '__mul__',
-'__ne__', '__new__', '__reduce__', '__reduce_ex__',
-'__repr__', '__reversed__', '__rmul__', '__setattr__',
-'__setitem__', '__sizeof__', '__str__', '__subclasshook__',
-'append', 'clear', 'copy', 'count', 'extend', 'index',
-'insert', 'pop', 'remove', 'reverse', 'sort']
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def print_msg():
+    msg = "zen of python"
+    def printer():
+        return msg
+    return printer
+
+another = print_msg()
+print(another())
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def make_multiplier_of(n):
+    def multiplier(x):
+        return x * n
+    return multiplier
+
+times3 = make_multiplier_of(3)
+
+times5 = make_multiplier_of(5)
+
+print(times3(9))
+
+print(times5(3))
+
+print(times5(times3(2)))
 </code></pre>
                     </div>
                 </section>
                 <section>
+                    <h3>Decorator</h3>
                     <ul>
                         <li class="fragment">
-                            <p><b>Everything in Python is an object.</b></p>
+                            <p>Decorators are "wrappers", which means that they let you execute code before and after the function they decorate without modifying the function itself.</p>
                         </li>
                     </ul>
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-stuff = list()
-stuff.append('python')
-stuff.append('chuck')
-stuff.sort()
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable data-noescape>
+def new_decorator(a_function_to_decorate):
+    def the_wrapper():
+        <mark>print("Before the function runs")</mark> 
+        <mark>a_function_to_decorate()</mark>
+        <mark>print("After the function runs")</mark>
+    return the_wrapper
 
-print (stuff[0])
-print (stuff.__getitem__(0))
-print (list.__getitem__(stuff,0))
+def a_function():
+    print("I am a stand alone function.")
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+a_function_decorated = new_decorator(a_function)
+a_function_decorated()
 </code></pre>
                     </div>
                     <div class="fragment">
                         <pre><code class="output" data-trim contenteditable>
-chuck
-chuck
-chuck
+Before the function runs
+I am a stand alone function.
+After the function runs
 </code></pre>
                     </div>
                 </section>
                 <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>Actually, the class you create inherits the "object" class.</b></p>
-                        </li>
-                        <li class="fragment">
-                            <p>Classes can intercept Python Operators</p>
-                        </li>
-                    </ul>
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    def __str__(self):
-        return "Dog's name is %s." % self.name  
-
-
-my_dog = Dog('willie', 6)
-print(dir(my_dog))
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+@my_shiny_new_decorator
+def another_stand_alone_function():
+    print("Leave me alone")
+# @decorator is just a shortcut
+another_stand_alone_function()  
 </code></pre>
                     </div>
                     <div class="fragment">
                         <pre><code class="output" data-trim contenteditable>
-['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__',
- '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', 
- '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__',
- '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 
-'age', 'name']
+Before the function runs
+Leave me alone
+After the function runs
 </code></pre>
                     </div>
                 </section>
                 <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>__str__</b></p>
-                        </li>
-                    </ul>
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def bread(func):
+    def wrapper():
+        print("</''''''\>")
+        func()
+        print("<\______/>")
+    return wrapper
 
-my_dog = Dog('willie', 6)
-print(my_dog)
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-<__main__.Dog object at 0x053A3750>
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    def __str__(self):
-        return self.name  
+def ingredients(func):
+    def wrapper():
+        print("#tomatoes#")
+        func()
+        print("~salad~")
+    return wrapper
 
-my_dog = Dog('willie', 6)
-print(my_dog)
+def sandwich(food="--ham--"):
+    print(food)
 </code></pre>
                     </div>
-                    <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-willie
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>__add__</b></p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-my_dog = Dog('willie', 6)
-print(my_dog.name +' your_dog')
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-willie your_dog
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def __add__(self, other):
-        return self.name + other
-
-my_dog = Dog('willie', 6)
-x = my_dog +' your_dog' 
-print(x)
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-willie your_dog
-</code></pre>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <ul>
-                        <li class="fragment">
-                            <p><b>__doc__, __name__, __module__, __bases__</b></p>
-                        </li>
-                    </ul>
-                    <div class="div-c">
+                    <div class="div-a">
                         <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    "This is about dog class."
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+                            <pre><code class="language-Python" data-line-numbers contenteditable>
+sandwich()
 
-print(Dog.__doc__)
-print(Dog.__name__)
-print(Dog.__module__)
-print(Dog.__bases__)
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-This is about dog class.
-Dog
-__main__
-(&lt;class 'object'&gt;,)
+sandwich = bread(ingredients(sandwich))
+sandwich()
+
+
 </code></pre>
                         </div>
                     </div>
-                    <div class="div-d">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    "This is about dog class."
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-class Husky(Dog):
-    pass
-
-print(Husky.__bases__)
-</code></pre>
-                        </div>
+                    <div class="div-b">
                         <div class="fragment">
                             <pre><code class="output" data-trim contenteditable>
-(&lt;class '__main__.Dog'&gt;,)
+
+--ham--
+
+</''''''\>
+ #tomatoes#
+ --ham--
+ ~salad~
+<\______/>
 </code></pre>
                         </div>
                     </div>
                 </section>
                 <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Importing a Single Class</p>
-                        </li>
-                        <li class="fragment">
-                            <p>Save your Car class in a python file: car.py</p>
-                        </li>
-                    </ul>
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-from car import Car
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+@bread
+@ingredients # The order matters here.
+def sandwich(food="--ham--"):
+    print(food)
 
-my_new_car = Car('audi', 'a4', 2016)
-print(my_new_car.get_descriptive_name())
-
-my_new_car.odometer_reading = 23
-my_new_car.read_odometer()
+sandwich()
 </code></pre>
                     </div>
                     <div class="fragment">
                         <pre><code class="output" data-trim contenteditable>
-2016 Audi A4
-This car has 23 miles on it.
+</''''''\>
+ #tomatoes#
+ --ham--
+ ~salad~
+<\______/>
 </code></pre>
                     </div>
                 </section>
                 <section>
                     <ul>
                         <li class="fragment">
-                            <p>Storing Multiple Classes in a Module</p>
+                            <p>Taking decorators to the next level</p>
                         </li>
                         <li class="fragment">
-                            <p>You can store as many classes as you need in a single module, although each class in a module should be related somehow. The classes <b>Battery </b>and <b>ElectricCar</b> both help represent cars, so let's add them to the module <b>car.py</b></p>
+                            <p>Passing arguments to the decorated function</p>
                         </li>
                     </ul>
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-from car import ElectricCar
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def a_decorator_passing_arguments(function_to_decorate):
+    def a_wrapper_accepting_arguments(arg1, arg2):
+        print("I got args! Look: {}, {}" .format(arg1, arg2))
+        function_to_decorate(arg1, arg2)
+    return a_wrapper_accepting_arguments
 
-my_tesla = ElectricCar('tesla', 'model s', 2016)
+@a_decorator_passing_arguments
+def print_full_name(first_name, last_name):
+    print("My name is {}, {}" .format(first_name, last_name))
 
-print(my_tesla.get_descriptive_name())
-my_tesla.battery.describe_battery()
-my_tesla.battery.get_range()
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-2016 Tesla Model S
-This car has a 70-kWh battery.
-This car can go approximately 240 miles on a full charge.
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Importing Multiple Classes from a Module</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-from car import Car, ElectricCar
-
-my_beetle = Car('volkswagen', 'beetle', 2016)
-print(my_beetle.get_descriptive_name())
-
-my_tesla = ElectricCar('tesla', 'roadster', 2016)
-print(my_tesla.get_descriptive_name())
+print_full_name("Peter", "Venkman")
 </code></pre>
                     </div>
                     <div class="fragment">
                         <pre><code class="output" data-trim contenteditable>
-2016 Volkswagen Beetle
-2016 Tesla Roadster
+I got args! Look: Peter, Venkman
+My name is Peter, Venkman
 </code></pre>
                     </div>
                 </section>
                 <section>
                     <ul>
                         <li class="fragment">
-                            <p>Importing a Module into a Module</p>
+                            <p>If you're making general-purpose decorator--one you'll apply to any function or method, no matter its arguments--then just use *args, **kwargs:</p>
                         </li>
-                        <li class="fragment">
-                            <p>car.py</p>
-                        </li>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Car():
-...
-</code></pre>
-                        </div>
-                        <li class="fragment">
-                            <p>electric_car.py</p>
-                        </li>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-from car import Car
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def a_decorator_passing_arbitrary_arguments(function_to_decorate):
+    # The wrapper accepts any arguments
+    def a_wrapper_accepting_arbitrary_arguments(*args, **kwargs):
+        print("Do I have args?:")
+        print(args)
+        print(kwargs)
+        function_to_decorate(*args, **kwargs)
+    return a_wrapper_accepting_arbitrary_arguments
 
-class Battery():
-...
+@a_decorator_passing_arbitrary_arguments
+def function_with_no_argument():
+    print("Python is cool, no argument here.")
 
-class ElectricCar(Car):
-...
+function_with_no_argument()
 </code></pre>
-                        </div>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
+Do I have args?:
+()
+{}
+Python is cool, no argument here.
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+@a_decorator_passing_arbitrary_arguments
+def function_with_arguments(a, b, c):
+    print(a, b, c)
+
+function_with_arguments(1,2,3)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
+Do I have args?:
+(1, 2, 3)
+{}
+1 2 3 
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+@a_decorator_passing_arbitrary_arguments
+def function_with_named_arguments(a, b, c, platypus="Why not ?"):
+    print("Do {0}, {1} and {2} like platypus? {3}".format(a, b, c, platypus))
+
+function_with_named_arguments("Bill", "Linus", "Steve", platypus="Indeed!")
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
+Do I have args ? :
+('Bill', 'Linus', 'Steve')
+{'platypus': 'Indeed!'}
+Do Bill, Linus and Steve like platypus? Indeed! 
+</code></pre>
+                    </div>
+                    <ul>
                         <li class="fragment">
-                            <p>my_cars.py</p>
+                            <p><a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484">Decorator Basics</a></p>
                         </li>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-from car import Car
-from electric_car import ElectricCar
-</code></pre>
-                        </div>
                     </ul>
                 </section>
                 <section>
-                    <h3>Summary of OOP</h3>
-                    <ul>
-                        <li class="fragment">
-                            <p>Three Features of OOP</p>
-                            <p>Encapsulation, inheritance, polymorphism</p>
-                        </li>
-                        <li class="fragment">
-                            <p><b>Everything in Python is object.</b></p>
-                        </li>
-                    </ul>
-                    <ul>
-                        <li class="fragment">
-                            <p>Process-oriented programming (POP)</p>
-                            <p>Object-oriented Programming (OOP)</p>
-                        </li>
-                    </ul>
+                    <div class="fragment"><img data-src="rf.png" style="height: 500pt"></div>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="de.png" style="height: 500pt"></div>
                 </section>
             </section>
             <section>
                 <section data-background="#2c3e50" style="color: white; text-align: left;">
                     <h2 style="color: white">Summary</h2>
                     <ul>
-                        <li>OOP</li>
+                        <li>Functions</li>
                         <ul>
-                            <li>Reading: Python Crash Course, Chapter 9</li>
+                            <li>Reading: Python for Everybody, Chapter 4</li>
+                            <li>Reading: Python Crash Course, Chapter 8</li>
                         </ul>
                     </ul>
                 </section>
             </section>
         </div>
     </div>
-    <script src="lib/js/head.min.js"></script>
-    <script src="js/reveal.js"></script>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/search/search.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/math/math.js"></script>
+    <script src="plugin/zoom_old/zoom_old.js"></script>
+    <script src="plugin/chalkboard/plugin.js"></script>
+    <script src="plugin/customcontrols/plugin.js"></script>
     <script>
-    // More info about config & dependencies:
-    // - https://github.com/hakimel/reveal.js#configuration
-    // - https://github.com/hakimel/reveal.js#dependencies
+    // Also available as an ES module, see:
+    // https://revealjs.com/initialization/
     Reveal.initialize({
-        // The "normal" size of the presentation, aspect ratio will be preserved
-        // when the presentation is scaled to fit different resolutions. Can be
-        // specified using percentage units.
-        width: 960,
-        height: 700,
-
-        // Factor of the display size that should remain empty around the content
-        margin: 0.1,
-
-        // Bounds for smallest/largest possible scale to apply to content
-        minScale: 0.2,
-        maxScale: 1.5,
-
-        // Display controls in the bottom right corner
         controls: true,
-
-        // Display a presentation progress bar
         progress: true,
-
-        // Set default timing of 2 minutes per slide
-        defaultTiming: 120,
-
-        // Display the page number of the current slide
-        slideNumber: true,
-
-        // Push each slide change to the browser history
-        history: false,
-
-        // Enable keyboard shortcuts for navigation
-        keyboard: true,
-
-        // Enable the slide overview mode
-        overview: true,
-
-        // Vertical centering of slides
         center: true,
+        hash: true,
+        customcontrols: {
+            controls: [{
+                    id: 'toggle-overview',
+                    title: 'Toggle overview (O)',
+                    icon: '<i class="fa fa-th"></i>',
+                    action: 'Reveal.toggleOverview();'
+                },
+                {
+                    icon: '<i class="fa fa-pen-square"></i>',
+                    title: 'Toggle chalkboard (B)',
+                    action: 'RevealChalkboard.toggleChalkboard();'
+                },
+                {
+                    icon: '<i class="fa fa-pen"></i>',
+                    title: 'Toggle notes canvas (C)',
+                    action: 'RevealChalkboard.toggleNotesCanvas();'
+                }
+            ]
+        },
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealChalkboard, RevealCustomControls, RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX],
 
-        // Enables touch navigation on devices with touch input
-        touch: true,
 
-        // Loop the presentation
-        loop: false,
 
-        // Change the presentation direction to be RTL
-        rtl: false,
-
-        // Randomizes the order of slides each time the presentation loads
-        shuffle: false,
-
-        // Turns fragments on and off globally
-        fragments: true,
-
-        // Flags if the presentation is running in an embedded mode,
-        // i.e. contained within a limited portion of the screen
-        embedded: false,
-
-        // Flags if we should show a help overlay when the questionmark
-        // key is pressed
-        help: true,
-
-        // Flags if speaker notes should be visible to all viewers
-        showNotes: false,
-
-        // Global override for autolaying embedded media (video/audio/iframe)
-        // - null: Media will only autoplay if data-autoplay is present
-        // - true: All media will autoplay, regardless of individual setting
-        // - false: No media will autoplay, regardless of individual setting
-        autoPlayMedia: null,
-
-        // Number of milliseconds between automatically proceeding to the
-        // next slide, disabled when set to 0, this value can be overwritten
-        // by using a data-autoslide attribute on your slides
-        autoSlide: 0,
-
-        // Stop auto-sliding after user input
-        autoSlideStoppable: true,
-
-        // Use this method for navigation when auto-sliding
-        autoSlideMethod: Reveal.navigateNext,
-
-        // Enable slide navigation via mouse wheel
-        mouseWheel: false,
-
-        // Hides the address bar on mobile devices
-        hideAddressBar: true,
-
-        // Opens links in an iframe preview overlay
-        previewLinks: false,
-
-        // Transition style
-        transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-        // Transition speed
-        transitionSpeed: 'default', // default/fast/slow
-
-        // Transition style for full page slide backgrounds
-        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
-
-        // Number of slides away from the current that are visible
-        viewDistance: 3,
-
-        // Parallax background image
-        parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
-
-        // Parallax background size
-        parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
-
-        // Number of pixels to move the parallax background per slide
-        // - Calculated automatically unless specified
-        // - Set to 0 to disable movement along an axis
-        parallaxBackgroundHorizontal: null,
-        parallaxBackgroundVertical: null,
-
-        // The display mode that will be used to show slides
-        display: 'block',
-
-        dependencies: [
-            { src: 'plugin/markdown/marked.js' },
-            { src: 'plugin/markdown/markdown.js' },
-            { src: 'plugin/notes/notes.js', async: true },
-            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-            // Zoom in and out with Alt+click
-            { src: 'plugin/zoom-js/zoom.js', async: true },
-
-            // Speaker notes
-            { src: 'plugin/notes/notes.js', async: true },
-
-            // MathJax
-            { src: 'plugin/math/math.js', async: true },
-            { src: 'plugin/line-numbers/line-numbers.js' }
-        ]
+    });
+    Reveal.configure({
+        pdfSeparateFragments: false
     });
     </script>
 </body>
